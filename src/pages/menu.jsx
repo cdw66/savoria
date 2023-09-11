@@ -84,7 +84,7 @@ const Menu = ({ items }) => {
         <div>
           {(category === "ALL ITEMS" || category === "APPETIZERS") && (
             <>
-              <h3 className="font-eb-garamond text-[20px] mb-4">Appetizers</h3>
+              <h3 className="font-eb-garamond text-[24px] mb-4">Appetizers</h3>
               <div className="flex flex-wrap gap-4 justify-center sm:justify-start">
                 {appetizers.map((item) => (
                   <MenuItem itemData={item} />
@@ -95,7 +95,7 @@ const Menu = ({ items }) => {
 
           {(category === "ALL ITEMS" || category === "MAINS") && (
             <>
-              <h3 className="font-eb-garamond text-[20px] mb-4">
+              <h3 className="font-eb-garamond text-[24px] mb-4">
                 Main Courses
               </h3>
               <div className="flex flex-wrap gap-4 justify-center sm:justify-start">
@@ -108,7 +108,7 @@ const Menu = ({ items }) => {
 
           {(category === "ALL ITEMS" || category === "FROM THE FARM") && (
             <>
-              <h3 className="font-eb-garamond text-[20px] mb-4">
+              <h3 className="font-eb-garamond text-[24px] mb-4">
                 From the Farm
               </h3>
               <div className="flex flex-wrap gap-4 justify-center sm:justify-start">
@@ -121,7 +121,7 @@ const Menu = ({ items }) => {
 
           {(category === "ALL ITEMS" || category === "DESSERTS") && (
             <>
-              <h3 className="font-eb-garamond text-[20px] mb-4">Desserts</h3>
+              <h3 className="font-eb-garamond text-[24px] mb-4">Desserts</h3>
               <div className="flex flex-wrap gap-4 justify-center sm:justify-start">
                 {desserts.map((item) => (
                   <MenuItem itemData={item} />

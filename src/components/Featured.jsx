@@ -15,7 +15,7 @@ const Featured = ({ items }) => {
         commodo consequat.
       </p>
       <Link
-        href="/about"
+        href="/menu"
         className="font-eb-garamond uppercase text-[18px] underline text-tan inline-block"
       >
         See Our Full Menu &#8594;

@@ -21,7 +21,7 @@ const Hero = () => {
           </h1>
           {/* <div>Reserve a Table</div> */}
           <Link
-            href="/reservations"
+            href="http://www.opentable.com/"
             className="font-eb-garamond uppercase text-[18px] bg-tan px-4 py-2 text-white mt-5 inline-block"
           >
             Make A Reservation &#8594;

@@ -1,12 +1,35 @@
-import { Box, Burger, Group, NavLink, Title, Menu } from "@mantine/core";
+import {
+  Box,
+  Burger,
+  Group,
+  NavLink,
+  Title,
+  Menu,
+  Drawer,
+  createStyles,
+} from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
+import { IconMenu2 } from "@tabler/icons-react";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import { useRouter } from "next/router";
+
+const useStyles = createStyles(() => ({
+  label: {
+    fontSize: "24px",
+    fontFamily: "EB Garamond",
+  },
+}));
 
 const Navbar = () => {
-  const [opened, { toggle }] = useDisclosure(false);
-  const label = opened ? "Close navigation" : "Open navigation";
+  // const [opened, { toggle }] = useDisclosure(false);
+  // const label = opened ? "Close navigation" : "Open navigation";
+  const [opened, { open, close }] = useDisclosure(false);
+  const router = useRouter();
+  const pathname = router.pathname;
+
+  const { classes } = useStyles();
 
   return (
     // <Box component="nav" sx={{ backgroundColor: "white" }}>
@@ -30,33 +53,30 @@ const Navbar = () => {
     //     </Group>
     //   </Group>
     // </Box>
-    <nav className="flex justify-between items-center px-[24px] py-2 drop-shadow-sm">
-      <Link href="/">
-        {/* <h1 className="my-0 no-underline">Savoria</h1> */}
-        <Image
-          width={130}
-          height={60}
-          src="/images/savoria_logo_transparent.png"
-          className="object-contain cursor-pointer"
-        />
-      </Link>
-      <Menu>
+    <>
+      <nav className="flex justify-between items-center px-[24px] py-2 drop-shadow-sm">
+        <Link href="/">
+          {/* <h1 className="my-0 no-underline">Savoria</h1> */}
+          <Image
+            width={130}
+            height={60}
+            src="/images/savoria_logo_transparent.png"
+            className="object-contain cursor-pointer"
+          />
+        </Link>
+
+        <IconMenu2 onClick={open} width={32} height={32} />
+        {/* <Burger /> */}
+        {/* <Menu>
         <Menu.Target>
           <Burger opened={opened} onClick={toggle} aria-label={label} />
         </Menu.Target>
 
         <Menu.Dropdown>
-          {/* <Menu.Item py={16}> */}
-          {/* <Link href="/menu" className="no-underline text-black text-lg">
-              Menu
-            </Link> */}
+
           <NavLink label="Home" href="/" component={Link} />
           <NavLink label="Menu" href="/menu" component={Link} />
-          {/* </Menu.Item> */}
-          {/* <Menu.Item py={16}> */}
-          {/* <Link href="locations" className="no-underline text-black text-lg">
-              Locations & Hours
-            </Link> */}
+
           <NavLink label="Locations & Hours">
             <NavLink
               label="Philadelphia"
@@ -69,30 +89,18 @@ const Navbar = () => {
               component={Link}
             />
           </NavLink>
-          {/* </Menu.Item> */}
-          {/* <Menu.Item py={16}> */}
-          {/* <Link
-              href="reservations"
-              className="no-underline text-black text-lg"
-            >
-              Reserve a Table
-            </Link> */}
+
           <NavLink
             label="Reserve a Table"
             href="/reservations"
             component={Link}
           />
-          {/* </Menu.Item> */}
-          {/* <Menu.Item py={16}> */}
-          {/* <Link href="about" className="no-underline text-black text-lg">
-              Our Story
-            </Link> */}
-          <NavLink label="Our Story" href="/about" component={Link} />
-          {/* </Menu.Item> */}
-        </Menu.Dropdown>
-      </Menu>
 
-      {/* <div className="bg-green-300 h-min">
+          <NavLink label="Our Story" href="/about" component={Link} />
+        </Menu.Dropdown>
+      </Menu> */}
+
+        {/* <div className="bg-green-300 h-min">
         <Link href="/menu" className="no-underline bg-red-300 h-min">
           Menu
         </Link>
@@ -106,7 +114,74 @@ const Navbar = () => {
           Our Story
         </Link>
       </div> */}
-    </nav>
+        <Drawer
+          opened={opened}
+          onClose={close}
+          overlayProps={{ opacity: 0.5, blur: 4 }}
+          position="right"
+          size={300}
+        >
+          {/* Drawer content */}
+          <div>
+            <NavLink
+              label="Home"
+              href="/"
+              component={Link}
+              onClick={close}
+              classNames={{ label: classes.label }}
+              className={`${pathname === "/" && "text-tan"}`}
+            />
+            <NavLink
+              label="Menu"
+              href="/menu"
+              component={Link}
+              onClick={close}
+              classNames={{ label: classes.label }}
+              className={`${pathname === "/menu" && "text-tan"}`}
+            />
+            <NavLink
+              label="Locations & Hours"
+              classNames={{ label: classes.label }}
+            >
+              <NavLink
+                label="Philadelphia"
+                href="/locations/philadelphia"
+                component={Link}
+                onClick={close}
+                classNames={{ label: classes.label }}
+                className={`${
+                  pathname === "/locations/philadelphia" && "text-tan"
+                }`}
+              />
+              <NavLink
+                label="New York City"
+                href="/locations/nyc"
+                component={Link}
+                onClick={close}
+                classNames={{ label: classes.label }}
+                className={`${pathname === "/locations/nyc" && "text-tan"}`}
+              />
+            </NavLink>
+            <NavLink
+              label="Reserve a Table"
+              href="/reservations"
+              component={Link}
+              onClick={close}
+              classNames={{ label: classes.label }}
+              className={`${pathname === "/reservations" && "text-tan"}`}
+            />
+            <NavLink
+              label="Our Story"
+              href="/about"
+              component={Link}
+              onClick={close}
+              classNames={{ label: classes.label }}
+              className={`${pathname === "/about" && "text-tan"}`}
+            />
+          </div>
+        </Drawer>
+      </nav>
+    </>
   );
 };
 
