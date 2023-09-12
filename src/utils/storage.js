@@ -11,7 +11,7 @@ export const uploadImages = async (images, postPath) => {
       const id = uuidv4();
       const storageRef = ref(
         storage,
-        `${process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET}/${postPath}/${id}` // Generate unique name
+        `/${postPath}/${id}` // Generate unique name
       );
       //   const upload = await uploadBytes(storageRef, images[0]);
       await uploadBytes(storageRef, images[i]);

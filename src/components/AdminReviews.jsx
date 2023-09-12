@@ -15,6 +15,8 @@ import {
   Tooltip,
   Button,
   Textarea,
+  ScrollArea,
+  Card,
 } from "@mantine/core";
 import { IconEdit, IconUpload, IconX } from "@tabler/icons-react";
 // import { UseForm } from "@mantine/form/lib/types";
@@ -22,25 +24,69 @@ import { useForm } from "@mantine/form";
 import MenuItem from "@/components/MenuItem";
 import TeamMember from "@/components/TeamMember";
 import { modals } from "@mantine/modals";
+import {
+  onSnapshot,
+  getDoc,
+  addDoc,
+  deleteDoc,
+  doc,
+  updateDoc,
+} from "firebase/firestore";
 
 const AdminReviews = () => {
   const [opened, { open, close }] = useDisclosure(false);
   const [reviews, setReviews] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [edit, setEdit] = useState(false);
 
-  const handleSubmit = (values) => {
+  const handleSubmit = async (values) => {
     console.log(values);
+    setLoading(true);
+    const { id, content, reviewer } = values;
 
-    close();
-    form.setValues(initialValues);
+    try {
+      if (edit) {
+        // Update values
+        const docRef = doc(db, "reviews", id);
+        // const docSnap = await getDoc(docRef);
+        // const docData = docSnap.data();
+
+        await updateDoc(docRef, {
+          content,
+          reviewer,
+        });
+
+        setEdit(false);
+      } else {
+        await addDoc(collection(db, "reviews"), {
+          content,
+          reviewer,
+        });
+        // Create new review in fb
+      }
+      setLoading(false);
+      close();
+    } catch (error) {
+      console.log(error);
+    }
+
+    // close();
+    // form.setValues(initialValues);
+  };
+
+  const handleDelete = async (id) => {
+    await deleteDoc(doc(db, "reviews", id));
   };
 
   const handleEdit = (index) => {
-    console.log("inside", reviews[index]);
+    setEdit(true);
+    // console.log("inside", reviews[index]);
 
     const review = reviews[index];
     const { content, reviewer } = review;
 
     form.setValues({
+      id: review.id,
       content,
       reviewer,
     });
@@ -49,16 +95,29 @@ const AdminReviews = () => {
   };
 
   useEffect(() => {
-    const fetchData = async () => {
-      const reviewsSnap = await getDocs(collection(db, "reviews"));
-      const reviewsData = reviewsSnap.docs.map((doc) => ({
-        ...doc.data(),
-      }));
+    // const fetchData = async () => {
+    //   const reviewsSnap = await getDocs(collection(db, "reviews"));
+    //   const reviewsData = reviewsSnap.docs.map((doc) => ({
+    //     ...doc.data(),
+    //   }));
 
-      setReviews(reviewsData);
-    };
+    //   setReviews(reviewsData);
+    // };
 
-    fetchData();
+    // fetchData();
+
+    const unsubscribe = onSnapshot(
+      collection(db, "reviews"),
+      (querySnapshot) => {
+        const data = [];
+        querySnapshot.forEach((doc) => {
+          data.push({ ...doc.data(), id: doc.id });
+        });
+        setReviews(data);
+      }
+    );
+
+    return () => unsubscribe();
   }, []);
 
   const initialValues = {
@@ -82,9 +141,17 @@ const AdminReviews = () => {
           <Stack mx="xl">
             <h1 className="text-center font-eb-garamond">Add Review</h1>
 
-            <Textarea label="Review" {...form.getInputProps("content")} />
+            <Textarea
+              label="Review"
+              {...form.getInputProps("content")}
+              required
+            />
 
-            <TextInput label="Reviewer" {...form.getInputProps("reviewer")} />
+            <TextInput
+              label="Reviewer"
+              {...form.getInputProps("reviewer")}
+              required
+            />
 
             <button
               type="submit"
@@ -113,51 +180,46 @@ const AdminReviews = () => {
           Add Review
         </button>
       </div>
-      {reviews.map((item, index) => (
-        <div className="flex flex-col relative gap-4">
-          {/* <Tooltip label="Edit Item" position="bottom" withArrow>
-                <IconEdit
-                  width={32}
-                  height={32}
-                  className="absolute right-14 top-4 cursor-pointer"
-                  onClick={() => console.log(staffData[index])}
-                />
-              </Tooltip>
-              <Tooltip label="Delete Item" position="bottom" withArrow>
-                <IconX
-                  width={32}
-                  height={32}
-                  color="red"
-                  className="absolute right-4 top-4 cursor-pointer"
-                  onClick={() => console.log(staffData[index])}
-                />
-              </Tooltip> */}
-          <div className="flex gap-4 justify-between">
-            <p key={index}>{item.content}</p>
-            <div className="flex">
-              <Tooltip label="Edit Item" position="bottom" withArrow>
-                <IconEdit
-                  width={32}
-                  height={32}
-                  className="cursor-pointer"
-                  //   onClick={() => console.log(reviews[index])}
-                  onClick={() => handleEdit(index)}
-                />
-              </Tooltip>
-              <Tooltip label="Delete Item" position="bottom" withArrow>
-                <IconX
-                  width={32}
-                  height={32}
-                  color="red"
-                  className="cursor-pointer"
-                  onClick={() => console.log(reviews[index])}
-                />
-              </Tooltip>
+      <ScrollArea h={300} className="bg-gray-100" p={16}>
+        {reviews.map((item, index) => (
+          <Card
+            shadow="sm"
+            padding="md"
+            radius="md"
+            mb={16}
+            key={index}
+            pos="relative"
+            withBorder
+          >
+            <div className="flex flex-col relative gap-4">
+              <div className="flex gap-4 justify-between">
+                <p>{item.content}</p>
+                <div className="flex">
+                  <Tooltip label="Edit Item" position="bottom" withArrow>
+                    <IconEdit
+                      width={32}
+                      height={32}
+                      className="cursor-pointer"
+                      //   onClick={() => console.log(reviews[index])}
+                      onClick={() => handleEdit(index)}
+                    />
+                  </Tooltip>
+                  <Tooltip label="Delete Item" position="bottom" withArrow>
+                    <IconX
+                      width={32}
+                      height={32}
+                      color="red"
+                      className="cursor-pointer"
+                      onClick={() => handleDelete(reviews[index].id)}
+                    />
+                  </Tooltip>
+                </div>
+              </div>
+              <p>~ {item.reviewer}</p>
             </div>
-          </div>
-          <p>~ {item.reviewer}</p>
-        </div>
-      ))}
+          </Card>
+        ))}
+      </ScrollArea>
       {/* </div> */}
     </section>
   );

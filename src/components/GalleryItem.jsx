@@ -1,10 +1,10 @@
 import React from "react";
 import Image from "next/image";
 
-const GalleryItem = () => {
+const GalleryItem = ({ item }) => {
   return (
     <div className="w-full aspect-square relative">
-      <Image src="/" fill />
+      <Image src={item?.url} fill />
     </div>
   );
 };

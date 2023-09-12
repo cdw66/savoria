@@ -28,6 +28,7 @@ import {
   Textarea,
   LoadingOverlay,
   ScrollArea,
+  Card,
 } from "@mantine/core";
 import { IconEdit, IconUpload, IconX } from "@tabler/icons-react";
 // import { UseForm } from "@mantine/form/lib/types";
@@ -243,6 +244,7 @@ const AdminMenu = () => {
               //   placeholder="Item Image"
               icon={<IconUpload />}
               {...form.getInputProps("image")}
+              accept="image/png,image/jpeg"
               required
               //   withAsterisk
             />
@@ -281,7 +283,15 @@ const AdminMenu = () => {
           {menuData.map((item, index) => (
             // <h1 key={index}>{item.name}</h1>
             // <AdminMenuItem key={index} item={item} />
-            <div key={index} className="relative">
+            <Card
+              shadow="sm"
+              padding="md"
+              radius="md"
+              key={index}
+              pos="relative"
+              withBorder
+            >
+              {/* <div key={index} className="relative"> */}
               <MenuItem itemData={item} />
               {/* <div className="bg-g"> */}
               <div className="right-2 top-2 absolute bg-white rounded-md flex">
@@ -308,7 +318,8 @@ const AdminMenu = () => {
                 </Tooltip>
               </div>
               {/* </div> */}
-            </div>
+              {/* </div> */}
+            </Card>
           ))}
         </div>
       </ScrollArea>

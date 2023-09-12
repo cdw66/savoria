@@ -1,11 +1,11 @@
 import Image from "next/image";
 
 const TeamMember = ({ member }) => {
-  const { img, title, name, details } = member;
+  const { image, title, name, details } = member;
   return (
     <div className="mb-5 flex-col gap-4 items-center">
-      <div className="w-full h-auto bg-green-300 aspect-square relative mb-4">
-        <Image src={img} fill />
+      <div className="w-full h-auto aspect-square relative mb-4">
+        <Image src={image} fill />
       </div>
 
       <div>
