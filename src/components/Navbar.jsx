@@ -20,6 +20,13 @@ const useStyles = createStyles(() => ({
     fontSize: "24px",
     fontFamily: "EB Garamond",
   },
+  item: {
+    fontFamily: "EB Garamond",
+    fontSize: "18px",
+  },
+  dropdown: {
+    borderRadius: "0px",
+  },
 }));
 
 const Navbar = () => {
@@ -61,59 +68,139 @@ const Navbar = () => {
             width={130}
             height={60}
             src="/images/savoria_logo_transparent.png"
-            className="object-contain cursor-pointer"
+            className={`object-contain cursor-pointer sm:hidden`}
+          />
+
+          <Image
+            width={240}
+            height={100}
+            src="/images/savoria_logo_transparent.png"
+            className={`object-contain cursor-pointer hidden sm:inline-block`}
           />
         </Link>
 
-        <IconMenu2 onClick={open} width={32} height={32} />
-        {/* <Burger /> */}
-        {/* <Menu>
-        <Menu.Target>
-          <Burger opened={opened} onClick={toggle} aria-label={label} />
-        </Menu.Target>
+        <div className="lg:flex hidden gap-8 font-eb-garamond text-[18px]">
+          <Link href="/" className={`${pathname === "/" && "text-tan"}`}>
+            Home
+          </Link>
+          <Link
+            href="/menu"
+            className={`${pathname === "/menu" && "text-tan"}`}
+          >
+            Menu
+          </Link>
 
-        <Menu.Dropdown>
+          <Menu classNames={{ item: classes.item, dropdown: classes.dropdown }}>
+            <Menu.Target>
+              <span className="cursor-pointer">Locations & Hours</span>
+            </Menu.Target>
 
-          <NavLink label="Home" href="/" component={Link} />
-          <NavLink label="Menu" href="/menu" component={Link} />
+            <Menu.Dropdown>
+              <Menu.Item>
+                <Link
+                  href="/locations/philadelphia"
+                  className={`${
+                    pathname === "/locations/philadelphia" && "text-tan"
+                  }`}
+                >
+                  Philadelphia
+                </Link>
+              </Menu.Item>
+              <Menu.Item>
+                <Link
+                  href="/locations/nyc"
+                  className={`${pathname === "/locations/nyc" && "text-tan"}`}
+                >
+                  New York City
+                </Link>
+              </Menu.Item>
+            </Menu.Dropdown>
+          </Menu>
 
-          <NavLink label="Locations & Hours">
+          <Link
+            href="/reservations"
+            className={`${pathname === "/reservations" && "text-tan"}`}
+          >
+            Reserve a Table
+          </Link>
+          <Link
+            href="/about"
+            className={`${pathname === "/about" && "text-tan"}`}
+          >
+            Our Story
+          </Link>
+          {/* <NavLink
+            label="Home"
+            href="/"
+            component={Link}
+            onClick={close}
+            classNames={{ label: classes.label }}
+            className={`${pathname === "/" && "text-tan"}`}
+          />
+          <NavLink
+            label="Menu"
+            href="/menu"
+            component={Link}
+            onClick={close}
+            classNames={{ label: classes.label }}
+            className={`${pathname === "/menu" && "text-tan"}`}
+          />
+          <NavLink
+            label="Locations & Hours"
+            classNames={{ label: classes.label }}
+            // className="min-max-content"
+          >
             <NavLink
               label="Philadelphia"
               href="/locations/philadelphia"
               component={Link}
+              onClick={close}
+              classNames={{ label: classes.label }}
+              className={`${
+                pathname === "/locations/philadelphia" && "text-tan"
+              }`}
             />
             <NavLink
               label="New York City"
               href="/locations/nyc"
               component={Link}
+              onClick={close}
+              classNames={{ label: classes.label }}
+              className={`${pathname === "/locations/nyc" && "text-tan"}`}
             />
           </NavLink>
-
           <NavLink
             label="Reserve a Table"
             href="/reservations"
             component={Link}
+            onClick={close}
+            classNames={{ label: classes.label }}
+            className={`${pathname === "/reservations" && "text-tan"}`}
           />
+          <NavLink
+            label="Our Story"
+            href="/about"
+            component={Link}
+            onClick={close}
+            classNames={{ label: classes.label }}
+            className={`${pathname === "/about" && "text-tan"}`}
+          /> */}
+        </div>
 
-          <NavLink label="Our Story" href="/about" component={Link} />
-        </Menu.Dropdown>
-      </Menu> */}
+        <IconMenu2
+          onClick={open}
+          width={32}
+          height={32}
+          className="sm:hidden"
+        />
 
-        {/* <div className="bg-green-300 h-min">
-        <Link href="/menu" className="no-underline bg-red-300 h-min">
-          Menu
-        </Link>
-        <Link href="/locations" className="no-underline h-min">
-          Locations & Hours
-        </Link>
-        <Link href="/reservations" className="no-underline h-min">
-          Reserve a Table
-        </Link>
-        <Link href="/about" className="no-underline h-min">
-          Our Story
-        </Link>
-      </div> */}
+        <IconMenu2
+          onClick={open}
+          width={48}
+          height={48}
+          className="lg:hidden sm:inline-block hidden"
+        />
+
         <Drawer
           opened={opened}
           onClose={close}

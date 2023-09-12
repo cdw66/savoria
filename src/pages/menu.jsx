@@ -31,50 +31,52 @@ const Menu = ({ items }) => {
       >
         <div className="w-full h-full z-10 absolute bg-black opacity-50"></div>
         <div className="flex flex-col z-20 w-full h-full text-white absolute text-center justify-center items-center">
-          <span className="uppercase text-tan font-lato">About Us</span>
+          <span className="uppercase text-tan font-lato sm:text-[24px]">
+            About Us
+          </span>
 
-          <h1 className="my-0 text-[40px] w-[80%] font-eb-garamond">
+          <h1 className="sm:text-[64px] text-[40px] sm:w-[60%] w-[80%] font-eb-garamond">
             Our Menu
           </h1>
-          <p className="my-0 w-[80%] text-center font-lato">
-            Our farm to table philosophy & the team behind the cuisine.
+          <p className="w-[80%] text-center font-lato text-[24px] sm:text-[32px]">
+            Explore Savoria's current menu items.
           </p>
         </div>
       </div>
 
-      <div className="p-[24px]">
-        <h2 className="text-[28px] font-eb-garamond mb-5 text-center">
+      <div className="p-[24px] lg:p-[72px]">
+        <h2 className="text-[28px] sm:text-[36px] font-eb-garamond mb-5 text-center">
           {category
             .toLowerCase()
             .replace(/(^|\s)\S/g, (match) => match.toUpperCase())}
         </h2>
-        <div className="flex flex-wrap gap-4 justify-center mb-5">
+        <div className="flex flex-wrap gap-4 justify-center mb-5 sm:text-[24px] lg:text-[16px]">
           <button
-            className="px-4 py-2 bg-white hover:bg-tan border-[2px] border-gray-300 font-eb-garamond"
+            className="px-4 py-2 bg-white hover:bg-tan border-[2px] border-gray-300 font-eb-garamond lg:px-8 lg:py-4"
             onClick={handleChange}
           >
             All Items
           </button>
           <button
-            className="px-4 py-2 bg-white hover:bg-tan border-[2px] border-gray-300 font-eb-garamond"
+            className="px-4 py-2 bg-white hover:bg-tan border-[2px] border-gray-300 font-eb-garamond lg:px-8 lg:py-4"
             onClick={handleChange}
           >
             Appetizers
           </button>
           <button
-            className="px-4 py-2 bg-white hover:bg-tan border-[2px] border-gray-300 font-eb-garamond"
+            className="px-4 py-2 bg-white hover:bg-tan border-[2px] border-gray-300 font-eb-garamond lg:px-8 lg:py-4"
             onClick={handleChange}
           >
             Mains
           </button>
           <button
-            className="px-4 py-2 bg-white hover:bg-tan border-[2px] border-gray-300 font-eb-garamond"
+            className="px-4 py-2 bg-white hover:bg-tan border-[2px] border-gray-300 font-eb-garamond lg:px-8 lg:py-4"
             onClick={handleChange}
           >
             From the Farm
           </button>
           <button
-            className="px-4 py-2 bg-white hover:bg-tan border-[2px] border-gray-300 font-eb-garamond"
+            className="px-4 py-2 bg-white hover:bg-tan border-[2px] border-gray-300 font-eb-garamond lg:px-8 lg:py-4"
             onClick={handleChange}
           >
             Desserts
@@ -84,7 +86,9 @@ const Menu = ({ items }) => {
         <div>
           {(category === "ALL ITEMS" || category === "APPETIZERS") && (
             <>
-              <h3 className="font-eb-garamond text-[24px] mb-4">Appetizers</h3>
+              <h3 className="font-eb-garamond text-[24px] sm:text-[32px] mb-4">
+                Appetizers
+              </h3>
               <div className="flex flex-wrap gap-4 justify-center sm:justify-start">
                 {appetizers.map((item) => (
                   <MenuItem itemData={item} />
@@ -95,7 +99,7 @@ const Menu = ({ items }) => {
 
           {(category === "ALL ITEMS" || category === "MAINS") && (
             <>
-              <h3 className="font-eb-garamond text-[24px] mb-4">
+              <h3 className="font-eb-garamond text-[24px] sm:text-[32px] mb-4">
                 Main Courses
               </h3>
               <div className="flex flex-wrap gap-4 justify-center sm:justify-start">
@@ -108,7 +112,7 @@ const Menu = ({ items }) => {
 
           {(category === "ALL ITEMS" || category === "FROM THE FARM") && (
             <>
-              <h3 className="font-eb-garamond text-[24px] mb-4">
+              <h3 className="font-eb-garamond text-[24px] sm:text-[32px] mb-4">
                 From the Farm
               </h3>
               <div className="flex flex-wrap gap-4 justify-center sm:justify-start">
@@ -121,7 +125,9 @@ const Menu = ({ items }) => {
 
           {(category === "ALL ITEMS" || category === "DESSERTS") && (
             <>
-              <h3 className="font-eb-garamond text-[24px] mb-4">Desserts</h3>
+              <h3 className="font-eb-garamond text-[24px] sm:text-[32px] mb-4">
+                Desserts
+              </h3>
               <div className="flex flex-wrap gap-4 justify-center sm:justify-start">
                 {desserts.map((item) => (
                   <MenuItem itemData={item} />

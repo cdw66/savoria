@@ -10,8 +10,8 @@ import Link from "next/link";
 
 const Footer = () => {
   return (
-    <footer className="bg-dark p-[24px] mt-[36px]">
-      <div className="text-white flex flex-col gap-4">
+    <footer className="flex flex-col sm:flex-row justify-between bg-dark p-[24px] mt-[36px]">
+      <div className="text-white flex flex-col gap-4 sm:w-[40%]">
         {/* <Image
             width={300}
             height={100}

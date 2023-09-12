@@ -21,7 +21,7 @@ const Reviews = () => {
   ];
 
   return (
-    <section className="bg-tan py-[18px] pb-[64px]">
+    <section className="bg-tan py-[18px] pb-[64px] lg:pt-[32px]">
       <div>
         <h2 className="text-center text-white font-eb-garamond text-[36px]">
           Reviews
@@ -46,7 +46,7 @@ const Reviews = () => {
         >
           {reviews.map((review, index) => (
             <Carousel.Slide key={index}>
-              <div className="px-[24px] text-white flex flex-col gap-6 h-full justify-center">
+              <div className="px-[24px] text-white flex flex-col gap-6 h-full justify-center sm:w-[500px] mx-auto">
                 <blockquote className="font-lato">
                   <p>{review.text}</p>
                 </blockquote>
