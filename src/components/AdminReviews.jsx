@@ -1,32 +1,21 @@
-import ProtectedRoute from "@/components/ProtectedRoute";
 import React, { useEffect, useState } from "react";
-import { collection, getDocs } from "firebase/firestore";
+import { collection } from "firebase/firestore";
 import { db } from "@/config/firebase";
 import { useDisclosure } from "@mantine/hooks";
 import {
   Modal,
-  NumberInput,
   TextInput,
   Stack,
-  NativeSelect,
-  MultiSelect,
-  FileInput,
-  Checkbox,
   Tooltip,
-  Button,
   Textarea,
   ScrollArea,
   Card,
+  LoadingOverlay,
 } from "@mantine/core";
-import { IconEdit, IconUpload, IconX } from "@tabler/icons-react";
-// import { UseForm } from "@mantine/form/lib/types";
+import { IconEdit, IconX } from "@tabler/icons-react";
 import { useForm } from "@mantine/form";
-import MenuItem from "@/components/MenuItem";
-import TeamMember from "@/components/TeamMember";
-import { modals } from "@mantine/modals";
 import {
   onSnapshot,
-  getDoc,
   addDoc,
   deleteDoc,
   doc,
@@ -48,8 +37,6 @@ const AdminReviews = () => {
       if (edit) {
         // Update values
         const docRef = doc(db, "reviews", id);
-        // const docSnap = await getDoc(docRef);
-        // const docData = docSnap.data();
 
         await updateDoc(docRef, {
           content,
@@ -58,20 +45,17 @@ const AdminReviews = () => {
 
         setEdit(false);
       } else {
+        // Save new values in Firebase
         await addDoc(collection(db, "reviews"), {
           content,
           reviewer,
         });
-        // Create new review in fb
       }
       setLoading(false);
       close();
     } catch (error) {
       console.log(error);
     }
-
-    // close();
-    // form.setValues(initialValues);
   };
 
   const handleDelete = async (id) => {
@@ -80,7 +64,6 @@ const AdminReviews = () => {
 
   const handleEdit = (index) => {
     setEdit(true);
-    // console.log("inside", reviews[index]);
 
     const review = reviews[index];
     const { content, reviewer } = review;
@@ -95,17 +78,6 @@ const AdminReviews = () => {
   };
 
   useEffect(() => {
-    // const fetchData = async () => {
-    //   const reviewsSnap = await getDocs(collection(db, "reviews"));
-    //   const reviewsData = reviewsSnap.docs.map((doc) => ({
-    //     ...doc.data(),
-    //   }));
-
-    //   setReviews(reviewsData);
-    // };
-
-    // fetchData();
-
     const unsubscribe = onSnapshot(
       collection(db, "reviews"),
       (querySnapshot) => {
@@ -128,15 +100,14 @@ const AdminReviews = () => {
   const form = useForm({
     initialValues,
 
-    // Validate email address
-    validate: {
-      // email: isEmail("Invalid email"),
-    },
+    validate: {},
   });
 
   return (
     <section className="mt-[48px]">
       <Modal opened={opened} onClose={close}>
+        <LoadingOverlay visible={loading} overlayBlur={2} />
+
         <form onSubmit={form.onSubmit((values) => handleSubmit(values))}>
           <Stack mx="xl">
             <h1 className="text-center font-eb-garamond">Add Review</h1>
@@ -156,10 +127,6 @@ const AdminReviews = () => {
             <button
               type="submit"
               className="px-4 py-2 bg-tan text-white w-[50%] mx-auto mt-5"
-              //   onClick={() => {
-              //     close();
-              //     form.setValues(initialValues);
-              //   }}
             >
               Save
             </button>
@@ -167,8 +134,7 @@ const AdminReviews = () => {
         </form>
       </Modal>
 
-      {/* <div> */}
-      <div className="flex w-full justify-between items-center border-b-2 mb-4">
+      <div className="flex w-full justify-between items-center border-b-2 mb-4 px-[24px]">
         <h2 className="font-eb-garamond text-[36px]">Reviews</h2>
         <button
           className="px-4 py-2 font-lato bg-tan text-white"
@@ -180,7 +146,7 @@ const AdminReviews = () => {
           Add Review
         </button>
       </div>
-      <ScrollArea h={300} className="bg-gray-100" p={16}>
+      <ScrollArea h={500} className="bg-gray-100" p={16}>
         {reviews.map((item, index) => (
           <Card
             shadow="sm"
@@ -200,7 +166,6 @@ const AdminReviews = () => {
                       width={32}
                       height={32}
                       className="cursor-pointer"
-                      //   onClick={() => console.log(reviews[index])}
                       onClick={() => handleEdit(index)}
                     />
                   </Tooltip>
@@ -220,7 +185,6 @@ const AdminReviews = () => {
           </Card>
         ))}
       </ScrollArea>
-      {/* </div> */}
     </section>
   );
 };

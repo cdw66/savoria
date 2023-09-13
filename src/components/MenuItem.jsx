@@ -6,9 +6,8 @@ const MenuItem = ({ itemData }) => {
 
   return (
     <div key={name} className="mb-6 max-w-[300px]">
-      {/* <img src={image} /> */}
       <div className="w-full aspect-square relative mb-4">
-        <Image src={image} fill className="object-cover" />
+        <Image src={image} fill className="object-cover" alt={name} />
       </div>
       <h4 className="text-tan uppercase font-lato">{name}</h4>
       <span className="font-eb-garamond text-[20px]">${price}</span>

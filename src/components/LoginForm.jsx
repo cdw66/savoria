@@ -1,21 +1,18 @@
 import { useEffect, useState } from "react";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import {
   TextInput,
   PasswordInput,
-  Checkbox,
-  Anchor,
   Paper,
   Title,
   Text,
   Container,
-  Group,
   Button,
   LoadingOverlay,
+  Checkbox,
 } from "@mantine/core";
 import { useForm, isEmail } from "@mantine/form";
-import { IconX, IconCheck } from "@tabler/icons-react";
+import { IconX } from "@tabler/icons-react";
 import { auth } from "../config/firebase";
 import {
   setPersistence,
@@ -24,7 +21,6 @@ import {
   signOut,
 } from "firebase/auth";
 import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
-// import { toast } from "react-toastify";
 
 const LoginForm = () => {
   const router = useRouter();
@@ -70,13 +66,6 @@ const LoginForm = () => {
     }
   };
 
-  // Redirect the user to profile page on login
-  //(this does not redirect already logged in users,
-  //user variable comes from useSignInWithEmailAndPassword hook)
-  // if (success && user) {
-  //   setTimeout(() => router.push("/"), "1000");
-  // }
-
   // Mantine form values & validation functions
   const form = useForm({
     initialValues: { email: "", password: "" },
@@ -99,9 +88,6 @@ const LoginForm = () => {
   useEffect(() => {
     // Set descriptive error messages
     if (error) {
-      //   toast.error("An error occurred while signing in.", {
-      //     position: toast.POSITION.BOTTOM_RIGHT,
-      //   });
       if (messages.includes(error.message)) {
         setErrorMessage("Invalid email or password.");
       } else if (error.message === retryError) {
@@ -114,24 +100,15 @@ const LoginForm = () => {
     }
     //Redirect to home on successful login
     if (success) {
-      //   toast.success("Sign in successful!", {
-      //     position: toast.POSITION.BOTTOM_RIGHT,
-      //   });
-      setTimeout(() => router.push("/auth/admin"), "50");
-      // router.push("/");
+      router.push("/auth/admin");
     }
   }, [error, success]);
 
   return (
     <Container size={420} my={40}>
-      <Title align="center">Welcome back!</Title>
-      <Text color="dimmed" size="sm" align="center" mt={5}>
-        Don't have an account yet?
-        <Link href="/register" className="hover:underline no-underline">
-          {" "}
-          Create account
-        </Link>
-      </Text>
+      <Title align="center" className="font-eb-garamond font-normal">
+        Savoria Admin Login
+      </Title>
 
       <Paper
         withBorder
@@ -168,22 +145,15 @@ const LoginForm = () => {
             required
           />
 
-          <Group position="apart" mt="lg">
-            <Checkbox
-              label="Remember me"
-              checked={checked}
-              onChange={(event) => setChecked(event.currentTarget.checked)}
-            />
-            <Link
-              href="/reset-password"
-              className="hover:underline no-underline"
-            >
-              Forgot password?
-            </Link>
-            {/* </Anchor> */}
-          </Group>
+          <Checkbox
+            mt="md"
+            label="Remember me"
+            checked={checked}
+            onChange={(event) => setChecked(event.currentTarget.checked)}
+          />
+
           <Button fullWidth mt="xl" type="submit" loading={loading}>
-            Sign in
+            Sign in &#8594;
           </Button>
         </form>
       </Paper>

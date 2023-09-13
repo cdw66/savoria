@@ -1,19 +1,12 @@
-import {
-  Box,
-  Burger,
-  Group,
-  NavLink,
-  Title,
-  Menu,
-  Drawer,
-  createStyles,
-} from "@mantine/core";
+import { NavLink, Menu, Drawer, createStyles } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { IconMenu2 } from "@tabler/icons-react";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { useRouter } from "next/router";
+import { auth } from "@/config/firebase";
+import { useAuth } from "@/context/AuthContext";
 
 const useStyles = createStyles(() => ({
   label: {
@@ -30,62 +23,50 @@ const useStyles = createStyles(() => ({
 }));
 
 const Navbar = () => {
-  // const [opened, { toggle }] = useDisclosure(false);
-  // const label = opened ? "Close navigation" : "Open navigation";
   const [opened, { open, close }] = useDisclosure(false);
   const router = useRouter();
   const pathname = router.pathname;
 
+  const { user } = useAuth();
+  const currentUser = auth.currentUser;
+
   const { classes } = useStyles();
 
   return (
-    // <Box component="nav" sx={{ backgroundColor: "white" }}>
-    //   <Group position="apart">
-    //     {/* <Link href="/" className="no-underline text-gray-400"> */}
-    //     <Title sx={{ fontFamily: "Caveat" }}>Savoria</Title>
-    //     {/* </Link> */}
-    //     <Group>
-    //       <Link href="/menu" className="no-underline">
-    //         Menu
-    //       </Link>
-    //       <Link href="/locations" className="no-underline">
-    //         Locations & Hours
-    //       </Link>
-    //       <Link href="/reservations" className="no-underline">
-    //         Reserve a Table
-    //       </Link>
-    //       <Link href="/about" className="no-underline">
-    //         Our Story
-    //       </Link>
-    //     </Group>
-    //   </Group>
-    // </Box>
     <>
       <nav className="flex justify-between items-center px-[24px] py-2 drop-shadow-sm">
         <Link href="/">
-          {/* <h1 className="my-0 no-underline">Savoria</h1> */}
           <Image
             width={130}
             height={60}
             src="/images/savoria_logo_transparent.png"
             className={`object-contain cursor-pointer sm:hidden`}
+            alt="Savoria logo"
           />
 
           <Image
-            width={240}
+            width={200}
             height={100}
             src="/images/savoria_logo_transparent.png"
             className={`object-contain cursor-pointer hidden sm:inline-block`}
+            alt="Savoria logo"
           />
         </Link>
 
         <div className="lg:flex hidden gap-8 font-eb-garamond text-[18px]">
-          <Link href="/" className={`${pathname === "/" && "text-tan"}`}>
+          <Link
+            href="/"
+            className={`${
+              pathname === "/" && "text-tan"
+            } hover:text-tan duration-200`}
+          >
             Home
           </Link>
           <Link
             href="/menu"
-            className={`${pathname === "/menu" && "text-tan"}`}
+            className={`${
+              pathname === "/menu" && "text-tan "
+            } hover:text-tan duration-200`}
           >
             Menu
           </Link>
@@ -101,7 +82,7 @@ const Navbar = () => {
                   href="/locations/philadelphia"
                   className={`${
                     pathname === "/locations/philadelphia" && "text-tan"
-                  }`}
+                  } hover:text-tan duration-200`}
                 >
                   Philadelphia
                 </Link>
@@ -109,7 +90,9 @@ const Navbar = () => {
               <Menu.Item>
                 <Link
                   href="/locations/nyc"
-                  className={`${pathname === "/locations/nyc" && "text-tan"}`}
+                  className={`${
+                    pathname === "/locations/nyc" && "text-tan"
+                  } hover:text-tan duration-200`}
                 >
                   New York City
                 </Link>
@@ -119,74 +102,34 @@ const Navbar = () => {
 
           <Link
             href="/reservations"
-            className={`${pathname === "/reservations" && "text-tan"}`}
+            className={`${
+              pathname === "/reservations" && "text-tan"
+            } hover:text-tan duration-200`}
           >
             Reserve a Table
           </Link>
           <Link
             href="/about"
-            className={`${pathname === "/about" && "text-tan"}`}
+            className={`${
+              pathname === "/about" && "text-tan"
+            } hover:text-tan duration-200`}
           >
             Our Story
           </Link>
-          {/* <NavLink
-            label="Home"
-            href="/"
-            component={Link}
-            onClick={close}
-            classNames={{ label: classes.label }}
-            className={`${pathname === "/" && "text-tan"}`}
-          />
-          <NavLink
-            label="Menu"
-            href="/menu"
-            component={Link}
-            onClick={close}
-            classNames={{ label: classes.label }}
-            className={`${pathname === "/menu" && "text-tan"}`}
-          />
-          <NavLink
-            label="Locations & Hours"
-            classNames={{ label: classes.label }}
-            // className="min-max-content"
-          >
-            <NavLink
-              label="Philadelphia"
-              href="/locations/philadelphia"
-              component={Link}
-              onClick={close}
-              classNames={{ label: classes.label }}
+
+          {currentUser && !user.loadingUser && (
+            <Link
+              href="/auth/admin"
               className={`${
-                pathname === "/locations/philadelphia" && "text-tan"
-              }`}
-            />
-            <NavLink
-              label="New York City"
-              href="/locations/nyc"
-              component={Link}
-              onClick={close}
-              classNames={{ label: classes.label }}
-              className={`${pathname === "/locations/nyc" && "text-tan"}`}
-            />
-          </NavLink>
-          <NavLink
-            label="Reserve a Table"
-            href="/reservations"
-            component={Link}
-            onClick={close}
-            classNames={{ label: classes.label }}
-            className={`${pathname === "/reservations" && "text-tan"}`}
-          />
-          <NavLink
-            label="Our Story"
-            href="/about"
-            component={Link}
-            onClick={close}
-            classNames={{ label: classes.label }}
-            className={`${pathname === "/about" && "text-tan"}`}
-          /> */}
+                pathname === "/auth/admin" && "text-tan"
+              } hover:text-tan duration-200`}
+            >
+              Admin
+            </Link>
+          )}
         </div>
 
+        {/* Mobile Nav */}
         <IconMenu2
           onClick={open}
           width={32}
@@ -265,6 +208,16 @@ const Navbar = () => {
               classNames={{ label: classes.label }}
               className={`${pathname === "/about" && "text-tan"}`}
             />
+            {currentUser && !user.loadingUser && (
+              <NavLink
+                label="Admin"
+                href="/auth/admin"
+                component={Link}
+                onClick={close}
+                classNames={{ label: classes.label }}
+                className={`${pathname === "/auth/admin" && "text-tan"}`}
+              />
+            )}
           </div>
         </Drawer>
       </nav>

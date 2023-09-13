@@ -1,20 +1,19 @@
-import { useState, useEffect } from "react";
-import { menuItems } from "@/data/constants";
+import { useState } from "react";
 import MenuItem from "@/components/MenuItem";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "@/config/firebase";
 
-const Menu = ({ items }) => {
+const Menu = ({ menuData }) => {
   const [category, setCategory] = useState("ALL ITEMS");
 
-  const appetizers = menuItems.filter((item) => item.category === "APPETIZERS");
-  const mains = menuItems.filter((item) => item.category === "MAINS");
-  const fromTheFarm = menuItems.filter(
+  console.log(menuData);
+
+  const appetizers = menuData?.filter((item) => item.category === "APPETIZERS");
+  const mains = menuData?.filter((item) => item.category === "MAINS");
+  const fromTheFarm = menuData?.filter(
     (item) => item.category === "FROM THE FARM"
   );
-  const desserts = menuItems.filter((item) => item.category === "DESSERTS");
-
-  // useEffect(() => {
-  //   console.log(selected);
-  // }, [selected]);
+  const desserts = menuData?.filter((item) => item.category === "DESSERTS");
 
   const handleChange = (e) => {
     setCategory(e.target.innerText.toUpperCase());
@@ -52,31 +51,41 @@ const Menu = ({ items }) => {
         </h2>
         <div className="flex flex-wrap gap-4 justify-center mb-5 sm:text-[24px] lg:text-[16px]">
           <button
-            className="px-4 py-2 bg-white hover:bg-tan border-[2px] border-gray-300 font-eb-garamond lg:px-8 lg:py-4"
+            className={`px-4 py-2 hover:bg-tan border-[2px] border-gray-300 font-eb-garamond lg:px-8 lg:py-4 duration-200 hover:text-white uppercase ${
+              category === "ALL ITEMS" ? "bg-tan text-white" : "bg-white"
+            }`}
             onClick={handleChange}
           >
             All Items
           </button>
           <button
-            className="px-4 py-2 bg-white hover:bg-tan border-[2px] border-gray-300 font-eb-garamond lg:px-8 lg:py-4"
+            className={`px-4 py-2 hover:bg-tan border-[2px] border-gray-300 font-eb-garamond lg:px-8 lg:py-4 duration-200 hover:text-white uppercase ${
+              category === "APPETIZERS" ? "bg-tan text-white" : "bg-white"
+            }`}
             onClick={handleChange}
           >
             Appetizers
           </button>
           <button
-            className="px-4 py-2 bg-white hover:bg-tan border-[2px] border-gray-300 font-eb-garamond lg:px-8 lg:py-4"
+            className={`px-4 py-2 hover:bg-tan border-[2px] border-gray-300 font-eb-garamond lg:px-8 lg:py-4 duration-200 hover:text-white uppercase ${
+              category === "MAINS" ? "bg-tan text-white" : "bg-white"
+            }`}
             onClick={handleChange}
           >
             Mains
           </button>
           <button
-            className="px-4 py-2 bg-white hover:bg-tan border-[2px] border-gray-300 font-eb-garamond lg:px-8 lg:py-4"
+            className={`px-4 py-2 hover:bg-tan border-[2px] border-gray-300 font-eb-garamond lg:px-8 lg:py-4 duration-200 hover:text-white uppercase ${
+              category === "FROM THE FARM" ? "bg-tan text-white" : "bg-white"
+            }`}
             onClick={handleChange}
           >
             From the Farm
           </button>
           <button
-            className="px-4 py-2 bg-white hover:bg-tan border-[2px] border-gray-300 font-eb-garamond lg:px-8 lg:py-4"
+            className={`px-4 py-2 hover:bg-tan border-[2px] border-gray-300 font-eb-garamond lg:px-8 lg:py-4 duration-200 hover:text-white uppercase ${
+              category === "DESSERTS" ? "bg-tan text-white" : "bg-white"
+            }`}
             onClick={handleChange}
           >
             Desserts
@@ -90,7 +99,7 @@ const Menu = ({ items }) => {
                 Appetizers
               </h3>
               <div className="flex flex-wrap gap-4 justify-center sm:justify-start">
-                {appetizers.map((item) => (
+                {appetizers?.map((item) => (
                   <MenuItem itemData={item} />
                 ))}
               </div>
@@ -103,7 +112,7 @@ const Menu = ({ items }) => {
                 Main Courses
               </h3>
               <div className="flex flex-wrap gap-4 justify-center sm:justify-start">
-                {mains.map((item) => (
+                {mains?.map((item) => (
                   <MenuItem itemData={item} />
                 ))}
               </div>
@@ -116,7 +125,7 @@ const Menu = ({ items }) => {
                 From the Farm
               </h3>
               <div className="flex flex-wrap gap-4 justify-center sm:justify-start">
-                {fromTheFarm.map((item) => (
+                {fromTheFarm?.map((item) => (
                   <MenuItem itemData={item} />
                 ))}
               </div>
@@ -129,7 +138,7 @@ const Menu = ({ items }) => {
                 Desserts
               </h3>
               <div className="flex flex-wrap gap-4 justify-center sm:justify-start">
-                {desserts.map((item) => (
+                {desserts?.map((item) => (
                   <MenuItem itemData={item} />
                 ))}
               </div>
@@ -137,9 +146,22 @@ const Menu = ({ items }) => {
           )}
         </div>
       </div>
-      <div>{/* For each menu item, render item */}</div>
     </>
   );
 };
+
+export async function getStaticProps() {
+  const menuSnap = await getDocs(collection(db, "menu-items"));
+  const menuData = menuSnap.docs.map((doc) => ({
+    ...doc.data(),
+  }));
+
+  return {
+    props: {
+      menuData,
+    },
+    revalidate: 60,
+  };
+}
 
 export default Menu;

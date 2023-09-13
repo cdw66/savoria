@@ -1,5 +1,4 @@
 import React from "react";
-import Image from "next/image";
 import {
   IconBrandFacebookFilled,
   IconBrandInstagram,
@@ -12,12 +11,6 @@ const Footer = () => {
   return (
     <footer className="flex flex-col sm:flex-row justify-between bg-dark p-[24px] mt-[36px]">
       <div className="text-white flex flex-col gap-4 sm:w-[40%]">
-        {/* <Image
-            width={300}
-            height={100}
-            src="/images/savoria_logo_transparent.png"
-            className="object-contain"
-          /> */}
         <h1 className="font-caveat font-light text-[64px] my-0 p-0 leading-[72px]">
           Savoria
         </h1>
@@ -36,8 +29,8 @@ const Footer = () => {
           </Link>
         </div>
         <p className="font-lato mb-4">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua.
+          Locally sourced, seasonal ingredients and culinary artistry to create
+          an unforgettable farm-to-table experience.
         </p>
       </div>
 

@@ -4,26 +4,32 @@ import Image from "next/image";
 
 const About = () => {
   return (
-    <section className="flex p-[24px] h-auto gap-10 items-center lg:justify-center py-[100px]">
-      {/* <div className="flex gap-10 h-auto"> */}
-      <div className="min-w-[250px] lg:w-[600px] h-[500px] relative bg-green-300 hidden sm:inline-block">
-        <Image src="/images/table.jpg" fill className="object-cover" />
+    <section className="flex p-[24px] h-auto gap-10 items-center lg:justify-center sm:py-[100px] py-[48px]">
+      <div className="min-w-[250px] lg:w-[600px] h-[500px] relative hidden sm:inline-block">
+        <Image
+          src="/images/table.jpg"
+          fill
+          className="object-cover"
+          alt="A restaurant table setting"
+        />
       </div>
       <div className="flex flex-col lg:w-[600px]">
         <span className="text-tan uppercase font-lato">
           Refresh your taste buds
         </span>
-        <h2 className="text-[32px] font-eb-garamond mb-5">
-          Enjoy An Exceptional Journey of Taste
+        <h2 className="lg:text-[48px] text-[36px] font-eb-garamond mb-5">
+          Indulge in Unforgettable Flavors
         </h2>
         <p className="font-lato">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequat. Duis aute irure dolor in
-          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-          culpa qui officia deserunt mollit anim id est laborum.
+          Welcome to Savoria, where culinary artistry meets the essence of
+          farm-to-table dining. Our philosophy is simple yet profound: we
+          believe that the freshest, locally sourced ingredients are the heart
+          of exceptional cuisine. With a commitment to sustainability and
+          seasonality, we craft dishes that celebrate the rich flavors of each
+          passing season. Learn about our dedicated team, the passionate
+          individuals who bring their expertise and creativity to every plate.
+          Discover the stories behind our commitment to local farmers and
+          producers, and see how our journey has evolved.
         </p>
         <Link
           href="/about"
@@ -32,7 +38,6 @@ const About = () => {
           Read More &#8594;
         </Link>
       </div>
-      {/* </div> */}
     </section>
   );
 };

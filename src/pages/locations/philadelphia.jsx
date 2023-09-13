@@ -51,7 +51,8 @@ const Philadelphia = () => {
             Philadelphia
           </h1>
           <p className="w-[80%] text-center font-lato sm:text-[24px]">
-            A stunning location in the charming center of Philadelphia.
+            A stunning location in the charming historical center of
+            Philadelphia.
           </p>
         </div>
       </div>

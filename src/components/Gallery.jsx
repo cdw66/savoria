@@ -2,48 +2,19 @@ import React from "react";
 import Image from "next/image";
 import GalleryItem from "./GalleryItem";
 
-const Gallery = () => {
+const Gallery = ({ images }) => {
   return (
-    <section className="p-[24px]">
-      <span className="text-tan uppercase">Views Of Savoria</span>
-      <h2 className="text-[32px] font-eb-garamond mb-5">Gallery</h2>
-      {/* <div className="flex w-full justify-center bg-tan"> */}
-      {/* <div className="flex flex-wrap bg-tan p-4 justify-between after:basis-[30%] after:flex-auto"> */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-4 bg-tan p-4">
-        <GalleryItem />
-        <GalleryItem />
-        <GalleryItem />
-        <GalleryItem />
-        <GalleryItem />
-
-        {/* <div className="bg-green-300 flex flex-wrap flex-grow flex-shrink-0 basis-0">
-          <div className="w-full aspect-square relative sm:w-[30%]">
-            <Image src="/" fill />
-          </div>
-          <div className="w-full aspect-square relative sm:w-[30%]">
-            <Image src="/" fill />
-          </div>
-          <div className="w-full aspect-square relative sm:w-[30%]">
-            <Image src="/" fill />
-          </div>
-          <div className="w-full aspect-square relative sm:w-[30%]">
-            <Image src="/" fill />
-          </div>
-        </div> */}
-        {/* <div className="w-full aspect-square relative sm:w-[30%]">
-          <Image src="/" fill />
+    <section className="p-[24px] py-10">
+      <div className="bg-tan">
+        <h2 className="lg:text-[48px] text-[36px] font-eb-garamond mb-5 text-center text-white pt-6">
+          Gallery
+        </h2>
+        <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-4 p-4">
+          {images?.map((image, index) => (
+            <GalleryItem key={index} item={image} />
+          ))}
         </div>
-        <div className="w-full aspect-square relative sm:w-[30%]">
-          <Image src="/" fill />
-        </div>
-        <div className="w-full aspect-square relative sm:w-[30%]">
-          <Image src="/" fill />
-        </div>
-        <div className="w-full aspect-square relative sm:w-[30%]">
-          <Image src="/" fill />
-        </div> */}
       </div>
-      {/* // </div> */}
     </section>
   );
 };

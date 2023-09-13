@@ -45,7 +45,8 @@ const NYC = () => {
             New York City
           </h1>
           <p className="w-[80%] text-center font-lato sm:text-[24px]">
-            A stunning location on the Upper East Side of New York.
+            A cozy and rustic location nestled in the heart of Manhattan's
+            vibrant Greenwich Village.
           </p>
         </div>
       </div>

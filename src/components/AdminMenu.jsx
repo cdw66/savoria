@@ -1,11 +1,7 @@
-import ProtectedRoute from "@/components/ProtectedRoute";
 import React, { useEffect, useState } from "react";
 import {
   collection,
-  getDocs,
   doc,
-  query,
-  where,
   onSnapshot,
   deleteDoc,
   addDoc,
@@ -24,36 +20,28 @@ import {
   FileInput,
   Checkbox,
   Tooltip,
-  Button,
   Textarea,
   LoadingOverlay,
   ScrollArea,
   Card,
 } from "@mantine/core";
 import { IconEdit, IconUpload, IconX } from "@tabler/icons-react";
-// import { UseForm } from "@mantine/form/lib/types";
 import { useForm } from "@mantine/form";
 import MenuItem from "@/components/MenuItem";
-import TeamMember from "@/components/TeamMember";
-import { modals } from "@mantine/modals";
-import { uploadImages, uploadImage } from "@/utils/storage";
-import { writeBatch } from "firebase/firestore";
+import { uploadImage } from "@/utils/storage";
 
 const AdminMenu = () => {
   const [opened, { open, close }] = useDisclosure(false);
-  //   const [visible, { toggle }] = useDisclosure(false);
   const [loading, setLoading] = useState(false);
   const [menuData, setMenuData] = useState([]);
   const [edit, setEdit] = useState(false);
-  //   const [id, setId] = useState("");
-  //   const [value, setValue] = useState([]);
   const [data, setData] = useState([
     { value: "dairy", label: "Dairy" },
     { value: "gluten", label: "Gluten" },
+    { value: "nuts", label: "Nuts" },
   ]);
 
   const handleSubmit = async (values) => {
-    // console.log("values", values);
     setLoading(true);
 
     const {
@@ -93,9 +81,6 @@ const AdminMenu = () => {
 
         setEdit(false);
       } else {
-        // console.log("image", image);
-
-        // console.log("outer image", image);
         if (image) {
           console.log("image", image);
           imgUrl = await uploadImage(image, "menu-images");
@@ -129,7 +114,6 @@ const AdminMenu = () => {
 
   const handleEdit = (index) => {
     setEdit(true);
-    // console.log("inside", menuData[index]);
 
     const item = menuData[index];
     const { name, category, description, featured, image, price, allergens } =
@@ -177,10 +161,7 @@ const AdminMenu = () => {
   const form = useForm({
     initialValues,
 
-    // Validate email address
-    validate: {
-      // email: isEmail("Invalid email"),
-    },
+    validate: {},
   });
 
   return (
@@ -236,17 +217,13 @@ const AdminMenu = () => {
                 return item;
               }}
               {...form.getInputProps("allergens")}
-              //   value={value}
-              //   onChange={setValue}
             />
             <FileInput
               label="Item Image (Click to add an image)"
-              //   placeholder="Item Image"
               icon={<IconUpload />}
               {...form.getInputProps("image")}
               accept="image/png,image/jpeg"
               required
-              //   withAsterisk
             />
             <Checkbox
               label="Feature on homepage"
@@ -255,10 +232,6 @@ const AdminMenu = () => {
             <button
               type="submit"
               className="px-4 py-2 bg-tan text-white w-[50%] mx-auto mt-5 font-lato"
-              //   onClick={() => {
-              //     close();
-              //     form.setValues(initialValues);
-              //   }}
             >
               Save
             </button>
@@ -266,7 +239,7 @@ const AdminMenu = () => {
         </form>
       </Modal>
 
-      <div className="flex w-full justify-between items-center border-b-2 mb-4">
+      <div className="flex w-full justify-between items-center border-b-2 mb-4 px-[24px]">
         <h2 className="font-eb-garamond text-[36px]">Menu Items</h2>
         <button
           className="px-4 py-2 font-lato bg-tan text-white h-min"
@@ -278,7 +251,7 @@ const AdminMenu = () => {
           Add Item
         </button>
       </div>
-      <ScrollArea h={400} className="bg-gray-100">
+      <ScrollArea h={500} className="bg-gray-100">
         <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-4 p-4">
           {menuData.map((item, index) => (
             // <h1 key={index}>{item.name}</h1>

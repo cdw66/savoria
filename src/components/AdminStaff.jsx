@@ -1,11 +1,7 @@
-import ProtectedRoute from "@/components/ProtectedRoute";
 import React, { useEffect, useState } from "react";
 import {
   collection,
-  getDocs,
   doc,
-  query,
-  where,
   onSnapshot,
   deleteDoc,
   addDoc,
@@ -16,26 +12,18 @@ import { db } from "@/config/firebase";
 import { useDisclosure } from "@mantine/hooks";
 import {
   Modal,
-  NumberInput,
   TextInput,
   Stack,
-  NativeSelect,
-  MultiSelect,
   FileInput,
-  Checkbox,
   Tooltip,
-  Button,
   Textarea,
   LoadingOverlay,
   ScrollArea,
   Card,
 } from "@mantine/core";
 import { IconEdit, IconUpload, IconX } from "@tabler/icons-react";
-// import { UseForm } from "@mantine/form/lib/types";
 import { useForm } from "@mantine/form";
-import MenuItem from "@/components/MenuItem";
 import TeamMember from "@/components/TeamMember";
-import { modals } from "@mantine/modals";
 import { uploadImage } from "@/utils/storage";
 
 const AdminStaff = () => {
@@ -75,7 +63,6 @@ const AdminStaff = () => {
         setEdit(false);
       } else {
         if (image) {
-          // console.log("image", image);
           imgUrl = await uploadImage(image, "staff-images");
         } else {
           imgUrl = "/";
@@ -93,9 +80,6 @@ const AdminStaff = () => {
     } catch (error) {
       console.log(error);
     }
-
-    // close();
-    // form.setValues(initialValues);
   };
 
   const handleDelete = async (id) => {
@@ -103,7 +87,6 @@ const AdminStaff = () => {
   };
 
   const handleEdit = (index) => {
-    // console.log("inside", staffData[index]);
     setEdit(true);
 
     const member = staffData[index];
@@ -121,15 +104,6 @@ const AdminStaff = () => {
   };
 
   useEffect(() => {
-    // const fetchData = async () => {
-    //   const staffSnap = await getDocs(collection(db, "staff"));
-    //   const staffData = staffSnap.docs.map((doc) => ({
-    //     ...doc.data(),
-    //   }));
-    //   setStaffData(staffData);
-    // };
-    // fetchData();
-
     const unsubscribe = onSnapshot(collection(db, "staff"), (querySnapshot) => {
       const data = [];
       querySnapshot.forEach((doc) => {
@@ -151,10 +125,7 @@ const AdminStaff = () => {
   const form = useForm({
     initialValues,
 
-    // Validate email address
-    validate: {
-      // email: isEmail("Invalid email"),
-    },
+    validate: {},
   });
 
   return (
@@ -188,11 +159,10 @@ const AdminStaff = () => {
         </form>
       </Modal>
 
-      <div className="flex w-full justify-between items-center border-b-2 mb-4">
+      <div className="flex w-full justify-between items-center border-b-2 mb-4 px-[24px]">
         <h2 className="font-eb-garamond text-[36px]">Staff</h2>
         <button
           className="px-4 py-2 font-lato bg-tan text-white"
-          //   onClick={open}
           onClick={() => {
             form.setValues(initialValues);
             open();
@@ -202,10 +172,9 @@ const AdminStaff = () => {
         </button>
       </div>
 
-      <ScrollArea h={400} className="bg-gray-100">
+      <ScrollArea h={500} className="bg-gray-100">
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 p-4">
           {staffData.map((item, index) => (
-            // <div className="relative max-w-[300px]">
             <Card
               shadow="sm"
               padding="md"
@@ -220,8 +189,6 @@ const AdminStaff = () => {
                   <IconEdit
                     width={32}
                     height={32}
-                    // className="absolute right-14 top-4 cursor-pointer"
-                    // onClick={() => console.log(staffData[index])}
                     onClick={() => handleEdit(index)}
                   />
                 </Tooltip>
@@ -230,13 +197,11 @@ const AdminStaff = () => {
                     width={32}
                     height={32}
                     color="red"
-                    // className="absolute right-4 top-4 cursor-pointer"
                     onClick={() => handleDelete(staffData[index].id)}
                   />
                 </Tooltip>
               </div>
             </Card>
-            // </div>
           ))}
         </div>
       </ScrollArea>

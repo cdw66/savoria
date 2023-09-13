@@ -1,5 +1,4 @@
 import { storage } from "../config/firebase";
-// const uuidv4 = require("uuid/v4");
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { v4 as uuidv4 } from "uuid";
 
@@ -13,7 +12,6 @@ export const uploadImages = async (images, postPath) => {
         storage,
         `/${postPath}/${id}` // Generate unique name
       );
-      //   const upload = await uploadBytes(storageRef, images[0]);
       await uploadBytes(storageRef, images[i]);
       const url = await getDownloadURL(storageRef);
       imgUrls.push(url);

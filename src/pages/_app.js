@@ -4,16 +4,65 @@ import "@/styles/globals.css";
 import { AuthContextProvider } from "@/context/AuthContext";
 import { ContextModalProps, ModalsProvider } from "@mantine/modals";
 
-// const MenuModal = ({ context, id, innerProps }) => (
-//   <>
-//     <p>Add Menu Item</p>
-//   </>
-// );
-
 export default function App({ Component, pageProps }) {
   return (
     <AuthContextProvider>
-      <MantineProvider withNormalizeCSS withGlobalStyles>
+      <MantineProvider
+        theme={{
+          components: {
+            TextInput: {
+              styles: {
+                root: {
+                  fontFamily: "Lato",
+                  fontWeight: "bold",
+                },
+                label: {
+                  fontWeight: "bold",
+                },
+              },
+            },
+            PasswordInput: {
+              styles: {
+                root: {
+                  fontFamily: "Lato",
+                  fontWeight: "bold",
+                },
+                label: {
+                  fontWeight: "bold",
+                },
+              },
+            },
+            Button: {
+              styles: {
+                root: {
+                  backgroundColor: "tan",
+                  fontFamily: "Eb Garamond",
+                  fontSize: "18px",
+                  textTransform: "uppercase",
+                  fontWeight: "400",
+                  borderRadius: "0px",
+                },
+              },
+            },
+            NavLink: {
+              styles: {
+                root: {
+                  "&:hover": { color: "tan" },
+                },
+              },
+            },
+            Checkbox: {
+              styles: {
+                label: {
+                  fontFamily: "Lato",
+                },
+              },
+            },
+          },
+        }}
+        withNormalizeCSS
+        withGlobalStyles
+      >
         <ModalsProvider>
           <Layout>
             <Component {...pageProps} />

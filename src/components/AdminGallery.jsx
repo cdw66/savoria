@@ -1,41 +1,23 @@
-import ProtectedRoute from "@/components/ProtectedRoute";
 import React, { useEffect, useState } from "react";
 import {
   collection,
-  getDocs,
   doc,
-  query,
-  where,
   onSnapshot,
   deleteDoc,
   addDoc,
-  updateDoc,
-  getDoc,
 } from "firebase/firestore";
 import { db } from "@/config/firebase";
-import { useDisclosure, useSetState } from "@mantine/hooks";
+import { useDisclosure } from "@mantine/hooks";
 import {
   Modal,
-  NumberInput,
-  TextInput,
   Stack,
-  NativeSelect,
-  MultiSelect,
   FileInput,
-  Checkbox,
   Tooltip,
-  Button,
-  Textarea,
   LoadingOverlay,
   ScrollArea,
-  Card,
 } from "@mantine/core";
-import { IconEdit, IconUpload, IconX } from "@tabler/icons-react";
-// import { UseForm } from "@mantine/form/lib/types";
+import { IconUpload, IconX } from "@tabler/icons-react";
 import { useForm } from "@mantine/form";
-import MenuItem from "@/components/MenuItem";
-import TeamMember from "@/components/TeamMember";
-import { modals } from "@mantine/modals";
 import GalleryItem from "./GalleryItem";
 import { uploadImages } from "@/utils/storage";
 
@@ -45,15 +27,10 @@ const AdminGallery = () => {
   const [images, setImages] = useState([]);
 
   const handleSubmit = async (values) => {
-    // console.log(values);
-    // console.log("submitted");
-
     const { images } = values;
 
-    // console.log(images);
     if (images) {
       setLoading(true);
-      console.log("ding");
       try {
         const imageUrls = await uploadImages(images, "gallery-images");
 
@@ -71,9 +48,6 @@ const AdminGallery = () => {
     } else {
       close();
     }
-
-    // close();
-    // form.setValues(initialValues);
   };
 
   const handleDelete = async (id) => {
@@ -102,10 +76,7 @@ const AdminGallery = () => {
   const form = useForm({
     initialValues,
 
-    // Validate email address
-    validate: {
-      // email: isEmail("Invalid email"),
-    },
+    validate: {},
   });
 
   return (
@@ -118,11 +89,8 @@ const AdminGallery = () => {
           <Stack mx="xl">
             <h1 className="text-center font-eb-garamond">Add Gallery Images</h1>
 
-            {/* <TextInput label="Name" {...form.getInputProps("name")} /> */}
-            {/* <TextInput label="Title" {...form.getInputProps("title")} /> */}
-            {/* <TextInput label="Bio" {...form.getInputProps("details")} /> */}
             <FileInput
-              label="Images"
+              label="Images (Click to add one or more images)"
               placeholder="Gallery Images"
               icon={<IconUpload />}
               {...form.getInputProps("images")}
@@ -140,11 +108,10 @@ const AdminGallery = () => {
         </form>
       </Modal>
 
-      <div className="flex w-full justify-between items-center border-b-2 mb-4">
+      <div className="flex w-full justify-between items-center border-b-2 mb-4 px-[24px]">
         <h2 className="font-eb-garamond text-[36px]">Gallery Images</h2>
         <button
           className="px-4 py-2 font-lato bg-tan text-white"
-          // onClick={open}
           onClick={() => {
             form.setValues(initialValues);
             open();
@@ -154,7 +121,7 @@ const AdminGallery = () => {
         </button>
       </div>
 
-      <ScrollArea h={300} className="bg-gray-100">
+      <ScrollArea h={500} className="bg-gray-100">
         <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-4 p-4">
           {images.map((image, index) => (
             <div key={index} className="relative">
@@ -165,8 +132,6 @@ const AdminGallery = () => {
                     width={32}
                     height={32}
                     color="red"
-                    // className="absolute right-2 top-2 cursor-pointer"
-                    // onClick={() => console.log(images[index])}
                     onClick={() => handleDelete(images[index].id)}
                   />
                 </Tooltip>
