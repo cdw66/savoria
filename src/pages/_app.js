@@ -42,6 +42,7 @@ export default function App({ Component, pageProps }) {
                   textTransform: "uppercase",
                   fontWeight: "400",
                   borderRadius: "0px",
+                  "&:hover": { backgroundColor: "tan" },
                 },
               },
             },
