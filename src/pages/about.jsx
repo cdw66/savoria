@@ -61,7 +61,7 @@ const About = ({ staffData }) => {
         </div>
 
         <div className="flex flex-wrap gap-4 my-[100px] lg:max-w-[60%] lg:mx-auto">
-          <div className="w-full h-auto bg-green-300 aspect-square relative sm:w-[60%]">
+          <div className="w-full h-auto aspect-square relative sm:w-[60%]">
             <Image
               src="/images/about1.jpg"
               fill
@@ -70,7 +70,7 @@ const About = ({ staffData }) => {
             />
           </div>
 
-          <div className="w-full h-auto bg-green-300 aspect-square relative sm:w-[60%] sm:ml-auto">
+          <div className="w-full h-auto aspect-square relative sm:w-[60%] sm:ml-auto">
             <Image
               src="/images/about2.jpg"
               fill
