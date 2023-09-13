@@ -2,7 +2,8 @@ import { MantineProvider } from "@mantine/core";
 import Layout from "@/components/Layout";
 import "@/styles/globals.css";
 import { AuthContextProvider } from "@/context/AuthContext";
-import { ContextModalProps, ModalsProvider } from "@mantine/modals";
+import { ModalsProvider } from "@mantine/modals";
+import Head from "next/head";
 
 export default function App({ Component, pageProps }) {
   return (
@@ -65,6 +66,9 @@ export default function App({ Component, pageProps }) {
       >
         <ModalsProvider>
           <Layout>
+            <Head>
+              <title>Savoria Restaurant</title>
+            </Head>
             <Component {...pageProps} />
           </Layout>
         </ModalsProvider>

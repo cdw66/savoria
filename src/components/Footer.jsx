@@ -32,6 +32,7 @@ const Footer = () => {
           Locally sourced, seasonal ingredients and culinary artistry to create
           an unforgettable farm-to-table experience.
         </p>
+        <span>&#169; Lorem Digital Services LLC 2023</span>
       </div>
 
       <div className="flex text-white gap-4 font-lato">
