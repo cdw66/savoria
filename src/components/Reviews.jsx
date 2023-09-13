@@ -24,6 +24,7 @@ const Reviews = ({ reviews }) => {
               width={36}
               height={36}
               className="hidden sm:inline-block"
+              aria-label="Next Review"
             />
           }
           previousControlIcon={
@@ -31,6 +32,7 @@ const Reviews = ({ reviews }) => {
               width={36}
               height={36}
               className="hidden sm:inline-block"
+              aria-label="Previous Review"
             />
           }
           styles={{

@@ -15,16 +15,16 @@ const Footer = () => {
           Savoria
         </h1>
         <div className="flex gap-4">
-          <Link href="http://twitter.com/">
+          <Link href="http://twitter.com/" aria-label="Twitter">
             <IconBrandTwitterFilled width={32} height={32} />
           </Link>
-          <Link href="http://facebook.com/">
+          <Link href="http://facebook.com/" aria-label="Facebook">
             <IconBrandFacebookFilled width={32} height={32} />
           </Link>
-          <Link href="http://instagram.com/">
+          <Link href="http://instagram.com/" aria-label="Instagram">
             <IconBrandInstagram width={32} height={32} />
           </Link>
-          <Link href="http://pinterest.com/">
+          <Link href="http://pinterest.com/" aria-label="Pinterest">
             <IconBrandPinterest width={32} height={32} />
           </Link>
         </div>
